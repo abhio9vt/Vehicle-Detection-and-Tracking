@@ -16,12 +16,13 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 [image1]: ./output_images/car_not_car.png
-[image2]: ./examples/HOG_example.jpg
+[image2]: ./output_images/HOG_example.jpg
 [image3]: ./examples/sliding_windows.jpg
 [image4]: ./examples/sliding_window.jpg
 [image5]: ./examples/bboxes_and_heat.png
 [image6]: ./examples/labels_map.png
 [image7]: ./examples/output_bboxes.png
+[image8]: ./output_images/color_spaces.png
 [video1]: ./project_video.mp4
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/513/view) Points
@@ -46,10 +47,15 @@ I started by reading in all the `vehicle` and `non-vehicle` images.  Here is an 
 
 I then explored different color spaces and different `skimage.hog()` parameters (`orientations`, `pixels_per_cell`, and `cells_per_block`).  I grabbed random images from each of the two classes and displayed them to get a feel for what the `skimage.hog()` output looks like.
 
-Here is an example using the `YCrCb` color space and HOG parameters of `orientations=8`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)`:
-
+Here is the HOG visualization of an example car image for the parameters `orientations=9`, `pixels_per_cell=(8, 8)` and `cells_per_block=(2, 2)`:
 
 ![alt text][image2]
+
+Apart from HOG feature exploration I also looked into various color spaces. After comparing the 3d plots of various colorspaces (RGB, HSV and YCrCb), I decided to use YCrCb color space for extracting color space information from cares and later using it along with HOG features to train my classifier.
+
+Here is an example of color space plots for an example car image in RGB, YCrCb and HSV space.
+
+![alt-text][image8]
 
 ####2. Explain how you settled on your final choice of HOG parameters.
 
