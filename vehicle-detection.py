@@ -3,6 +3,7 @@ import glob
 import time
 import numpy as np
 import matplotlib.image as mpimg
+import matplotlib.pyplot as plt
 from skimage.feature import hog
 from sklearn.svm import LinearSVC
 from sklearn.preprocessing import StandardScaler
@@ -143,7 +144,7 @@ def draw_labeled_bboxes(img, labels):
         # Define a bounding box based on min/max x and y
         bbox = ((np.min(nonzerox), np.min(nonzeroy)), (np.max(nonzerox), np.max(nonzeroy)))
         # Draw the box on the image
-        cv2.rectangle(img, bbox[0], bbox[1], (0, 0, 255), 6)
+        cv2.rectangle(img, bbox[0], bbox[1], (0, 255, 0), 6)
     # Return the image
     return img
 
@@ -234,7 +235,7 @@ def process_image(image):
     heat = add_heat(heat, [bbox for bboxes in last_bboxes for bbox in bboxes])
 
     # Apply threshold to help remove false positives
-    heat = apply_threshold(heat, 5)
+    heat = apply_threshold(heat, 8)
 
     # Visualize the heatmap when displaying
     heatmap = np.clip(heat, 0, 255)
@@ -243,10 +244,10 @@ def process_image(image):
     labels = label(heatmap)
     draw_img = draw_labeled_bboxes(np.copy(image), labels)
     return draw_img
-
+last_bboxes = []
 # Read in cars and notcars
-vehicles = glob.glob('data/vehicles/*/*.png')
-non_vehicles = glob.glob('data/non-vehicles/*/*.png')
+vehicles = glob.glob('./data/vehicles/*/*.png')
+non_vehicles = glob.glob('./data/non-vehicles/*/*.png')
 
 cars = []
 notcars = []
@@ -312,10 +313,15 @@ print(round(t2 - t, 2), 'Seconds to train SVC...')
 print('Test Accuracy of SVC = ', round(svc.score(X_test, y_test), 4))
 
 # Check the prediction time for a single sample
-t = time.time()
+# t = time.time()
 
 
-last_bboxes = []
+# test_images = glob.glob('./test_images/*.jpg')
+# for fname in test_images:
+#     img = mpimg.imread(fname)
+#     result = process_image(img)
+#     plt.imshow(result)
+#     plt.show()
 
 project_output_file = "project_output.mp4"
 project_video = VideoFileClip("project_video.mp4")
